@@ -1,28 +1,34 @@
-# GoogleMapsExample
+Projekt oparty na https://blog.lukasz-galka.pl/angular-intergracja-google-maps/
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.
+Zmiany dokonane w stosunku do oryginalnego projektu:
 
-## Development server
+1. Generowanie początkowego projektu za pomocą komend:
+ng new google-maps-example --style=scss
+cd google-maps-example
+npm i -S @agm/core
+npm i -D @types/googlemaps
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+2. Aktualizacja nazwy projektu bazowego z angular2-google-maps na @agm
 
-## Code scaffolding
+3. Aktualizacja nazw komponentu z sebm-google-map na agm-map
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+4. Aktualizacja nazw komponentu z sebm-google-map-marker na agm-marker
 
-## Build
+5. Zmiana w pliku src/app/app.module.ts
+    providers: []
+    na
+    providers: [GoogleMapsAPIWrapper]
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+6. Zmiana wpliku src/app/app.component.ts
+    this._mapsWrapper.getNativeMap().then(map => this.map = map);
+    na
+    this._mapsWrapper.getNativeMap().then(map => {
+      this.map = map;
+      console.log("Dostałem obiekt mapy")
+    });
 
-## Running unit tests
+7. Zmiana wpliku src/app/app.component.ts
+    return document.getElementById('map-autocomplete');
+    na
+    return <HTMLInputElement>document.getElementById('map-autocomplete');
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
